@@ -11,20 +11,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tikape.runko.domain.Opiskelija;
+import tikape.runko.domain.Keskustelu;
 
-public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
+public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     private Database database;
 
-    public OpiskelijaDao(Database database) {
+    public KeskusteluDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Opiskelija findOne(Integer key) throws SQLException {
+    public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Opiskelija WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -34,37 +34,37 @@ public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
         }
 
         Integer id = rs.getInt("id");
-        String nimi = rs.getString("nimi");
+        String otsikko = rs.getString("otsikko");
 
-        Opiskelija o = new Opiskelija(id, nimi);
+        Keskustelu k = new Keskustelu(id, otsikko);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return o;
+        return k;
     }
 
     @Override
-    public List<Opiskelija> findAll() throws SQLException {
+    public List<Keskustelu> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Opiskelija");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu");
 
         ResultSet rs = stmt.executeQuery();
-        List<Opiskelija> opiskelijat = new ArrayList<>();
+        List<Keskustelu> keskustelut = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
-            String nimi = rs.getString("nimi");
+            String otsikko = rs.getString("otsikko");
 
-            opiskelijat.add(new Opiskelija(id, nimi));
+            keskustelut.add(new Keskustelu(id, otsikko));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return opiskelijat;
+        return keskustelut;
     }
 
     @Override
