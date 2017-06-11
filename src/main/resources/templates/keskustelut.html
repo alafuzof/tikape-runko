@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Keskustelu</title>
+        <title>Keskustelut</title>
         <meta charset="utf-8" />
     </head>
 
@@ -11,7 +11,7 @@
 
         <ol>
             <li th:each="keskustelu: ${keskustelut}">
-                <span th:text="${keskustelu.otsikko}">Keskustelun otsikko</span> <a th:href="${'/keskustelut/' + keskustelu.id}">linkki</a>
+                <span th:text="${keskustelu.otsikko}"/> <a th:href="${'/keskustelut/' + keskustelu.id}">linkki</a>
             </li>
         </ol>
     </body>

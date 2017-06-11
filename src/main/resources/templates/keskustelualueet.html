@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Keskustelu</title>
+        <title>Listaa keskustelualueet</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
-        <h1><span th:text="${keskustelu.otsikko}"/></h1>
+        <h1><span th:text="${keskustelualue.nimi}"/></h1>
 
-        <p>Olet nyt keskustelussa: <span th:text="${keskustelu.otsikko}"/></p>
+        <p>Listaa keskustelualueet <span th:text="${keskustelualue.nimi}"/></p>
     </body>
 </html>

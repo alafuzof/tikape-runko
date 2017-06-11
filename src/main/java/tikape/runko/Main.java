@@ -36,6 +36,5 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
-        stop();
     }
 }
