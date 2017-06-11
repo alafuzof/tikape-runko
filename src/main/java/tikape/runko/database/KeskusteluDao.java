@@ -24,7 +24,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = 3");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -34,9 +34,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         }
 
         Integer id = rs.getInt("id");
+        Integer aloittaja = rs.getInt("aloittaja");
+        Integer alue = rs.getInt("alue");
         String otsikko = rs.getString("otsikko");
 
-        Keskustelu k = new Keskustelu(id, otsikko);
+        Keskustelu k = new Keskustelu(id,aloittaja,alue,otsikko);
 
         rs.close();
         stmt.close();
@@ -49,15 +51,27 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public List<Keskustelu> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu");
+        PreparedStatement stmt = connection.prepareStatement(
+        "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
+                + "MAX(v.lahetysaika) AS viimeisin "
+                + "FROM Keskustelualue a "
+                + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
+                + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
+                + "WHERE a.nimi = 'Ponit' "
+                + "GROUP BY otsikko "
+                + "ORDER BY avausaika DESC LIMIT 10"
+                );
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
         while (rs.next()) {
-            Integer id = rs.getInt("id");
-            String otsikko = rs.getString("otsikko");
+   
+        Integer id = rs.getInt("id");
+        Integer aloittaja = rs.getInt("aloittaja");
+        Integer alue = rs.getInt("alue");
+        String otsikko = rs.getString("otsikko");
 
-            keskustelut.add(new Keskustelu(id, otsikko));
+            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
         }
 
         rs.close();

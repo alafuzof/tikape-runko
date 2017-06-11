@@ -38,7 +38,7 @@ public class Database {
     private List<String> sqliteLauseet() {
         ArrayList<String> lista = new ArrayList<>();
 
-        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
+// tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
 //        lista.add("CREATE TABLE Kayttaja(id INTEGER PRIMARY KEY, tunnus VARCHAR(20) NOT NULL UNIQUE, salasana VARCHAR(20) DEFAULT NULL, admin BOOLEAN DEFAULT 0)");
 //        lista.add("INSERT INTO Kayttaja (id, tunnus, salasana, admin) VALUES (0, 'admin', 'admin', 1)");
 //        lista.add("INSERT INTO Kayttaja (id, tunnus) VALUES (1, 'Aleksander')");
