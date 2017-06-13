@@ -10,14 +10,15 @@ import tikape.runko.database.KeskusteluDao;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
         Database database = new Database("jdbc:sqlite:foorumi.db");
-        database.init();
+        database.init(); 
 
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "moikka");
+            map.put("viesti", "Tervetuloa AHOT-foorumille !");
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
@@ -36,5 +37,20 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
+        // Here comes the missing DAO-modules calls:
+        
+//        get("/keskustelualueet", (req, res) -> {
+//            HashMap map = new HashMap<>();
+//            map.put("keskustelualueet", keskustelualueDao.findAll());
+//
+//            return new ModelAndView(map, "keskustelualueet");
+//        }, new ThymeleafTemplateEngine());
+        
+//        get("/viestit", (req, res) -> {
+//            HashMap map = new HashMap<>();
+//            map.put("viestit", viestiDao.findAll());
+//
+//            return new ModelAndView(map, "viestit");
+//        }, new ThymeleafTemplateEngine());
     }
 }
