@@ -24,7 +24,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu k WHERE k.id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -38,18 +38,18 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Integer alue = rs.getInt("alue");
         String otsikko = rs.getString("otsikko");
 
-        Keskustelu k = new Keskustelu(id,aloittaja,alue,otsikko);
+        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return k;
+        return keskustelux;
     }
 
     @Override
     public List<Keskustelu> findAll() throws SQLException {
-
+        // Tässä on Tietokannat kovakoodattuna testausta varten
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
         "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
@@ -57,9 +57,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                 + "FROM Keskustelualue a "
                 + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
-                + "WHERE a.nimi = 'Ponit' "
+                + "WHERE a.nimi = 'Tietokannat' "
                 + "GROUP BY otsikko "
-                + "ORDER BY avausaika DESC LIMIT 10"
+                + "ORDER BY avausaika DESC LIMIT 10;"
                 );
 
         ResultSet rs = stmt.executeQuery();
