@@ -24,7 +24,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu k WHERE k.id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -52,6 +52,32 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         // Tässä on Tietokannat kovakoodattuna testausta varten
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
+        "SELECT * FROM Keskustelu");
+
+        ResultSet rs = stmt.executeQuery();
+        List<Keskustelu> keskustelut = new ArrayList<>();
+        while (rs.next()) {
+   
+            Integer id = rs.getInt("id");
+            Integer aloittaja = rs.getInt("aloittaja");
+            Integer alue = rs.getInt("alue");
+            String otsikko = rs.getString("otsikko");
+
+            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return keskustelut;
+    }
+    
+    @Override
+    public List<Keskustelu> findPerAlue() throws SQLException {
+        // Tässä on "Tietokannat" kovakoodattuna testausta varten
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(
         "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelualue a "
@@ -66,10 +92,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         List<Keskustelu> keskustelut = new ArrayList<>();
         while (rs.next()) {
    
-        Integer id = rs.getInt("id");
-        Integer aloittaja = rs.getInt("aloittaja");
-        Integer alue = rs.getInt("alue");
-        String otsikko = rs.getString("otsikko");
+            Integer id = rs.getInt("id");
+            Integer aloittaja = rs.getInt("aloittaja");
+            Integer alue = rs.getInt("alue");
+            String otsikko = rs.getString("otsikko");
 
             keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
         }
@@ -80,7 +106,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         return keskustelut;
     }
-
+    
     @Override
     public void delete(Integer key) throws SQLException {
         // ei toteutettu

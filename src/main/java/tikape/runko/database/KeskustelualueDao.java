@@ -19,7 +19,7 @@ public class  KeskustelualueDao implements Dao< Keskustelualue, Integer> {
     @Override
     public  Keskustelualue findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM  Keskustelualue a WHERE a.id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM  Keskustelualue WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -44,10 +44,7 @@ public class  KeskustelualueDao implements Dao< Keskustelualue, Integer> {
     public List< Keskustelualue> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(
-        "SELECT nimi, otsikko FROM Keskustelualue a "
-                + "LEFT JOIN Keskustelu k ON (a.id = k.alue) WHERE k.id = 1;"
-                );
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelualue");
 
         ResultSet rs = stmt.executeQuery();
         List< Keskustelualue> keskustelualueet = new ArrayList<>();
@@ -64,6 +61,12 @@ public class  KeskustelualueDao implements Dao< Keskustelualue, Integer> {
         connection.close();
 
         return keskustelualueet;
+    }
+    
+    @Override
+    public List< Keskustelualue> findPerAlue() throws SQLException {
+        // ei toteutettu
+        return null;
     }
 
     @Override

@@ -10,10 +10,8 @@
         <h1>Viestit</h1>
         <ol>
             <li th:each="viesti: ${viestit}">
-                <p><span th:text="${viesti.id}">viestin tunnus</span> <a th:href="${'/viestit/' + viesti.id}">linkki</a></p>
+                <p><span th:text="${viesti.id}"></span> <a th:href="${'/viestit/' + viesti.id}">linkki</a></p>
             </li>
         </ol>
-    
-        <p><a href="/index">paluu päävalintaan</a></p>
     </body>
 </html>

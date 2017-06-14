@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Database database = new Database("jdbc:sqlite:foorumi.db");
-        database.init(); 
+        database.init();
 
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
@@ -38,16 +38,29 @@ public class Main {
 
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
-        
+
         // Here comes the missing DAO-modules calls:
-        
         get("/keskustelualueet", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("keskustelualueet", keskustelualueDao.findAll());
 
             return new ModelAndView(map, "keskustelualueet");
         }, new ThymeleafTemplateEngine());
-        
+
+        get("/keskustelutPerAlue", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("keskustelutPerAlue", keskusteluDao.findPerAlue());
+
+            return new ModelAndView(map, "keskustelutPerAlue");
+        }, new ThymeleafTemplateEngine());
+
+        get("/keskustelualue/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("keskustelualue", keskustelualueDao.findOne(Integer.parseInt(req.params("id"))));
+
+            return new ModelAndView(map, "keskustelualue");
+        }, new ThymeleafTemplateEngine());
+
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viestit", viestiDao.findAll());
