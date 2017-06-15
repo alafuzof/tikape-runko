@@ -1,8 +1,10 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package tikape.runko.database;
 
 import java.sql.Connection;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import tikape.runko.domain.Keskustelualue;
 import tikape.runko.domain.KeskustelualueListausItem;
 
@@ -29,10 +32,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
 
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
     
+
     @Override
-    public Keskustelualue findOne(Integer key) throws SQLException {
+    public  Keskustelualue findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelualue WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM  Keskustelualue WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -44,21 +48,27 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
         Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
+
         Keskustelualue o = new Keskustelualue(id, nimi);
 
-        rs.close();
-        stmt.close();
-        connection.close();
+         Keskustelualue keskustelualuex = new  Keskustelualue(id,nimi);
 
+
+            rs.close();
+            stmt.close();
+            connection.close();
         return o;
     }
 
+
     @Override
-    public List<Keskustelualue> findAll() throws SQLException {
+    public List< Keskustelualue> findAll() throws SQLException {
+
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelualue");
 
         ResultSet rs = stmt.executeQuery();
+
         List<Keskustelualue> keskustelualueet = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
@@ -92,7 +102,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
             keskustelualuelistaus.add(new KeskustelualueListausItem(rowindex, kalue ,maara, viimeisin));
             i++;
         }
-
+        
         rs.close();
         stmt.close();
         connection.close();
@@ -113,3 +123,4 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
 
     
 }
+

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Lähetä uusi viesti keskusteluun</title>
+        <title>Viestit</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
-        <h1><span th:text="${keskustelu.otsikko}"/></h1>
-
-        <p>Lähetä uusi viesti keskusteluun <span th:text="${keskustelu.otsikko}"/></p>
+        <h1>Viestit</h1>
+        <ol>
+            <li th:each="viesti: ${viestit}">
+                <p><span th:text="${viesti.id}"></span> <a th:href="${'/viestit/' + viesti.id}">linkki</a></p>
+            </li>
+        </ol>
     </body>
 </html>

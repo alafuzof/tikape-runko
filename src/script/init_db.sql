@@ -12,6 +12,7 @@ CREATE TABLE Keskustelualue
     nimi VARCHAR(100) NOT NULL UNIQUE
 );
 
+<<<<<<< HEAD
 CREATE TABLE Keskustelu
 (
     id INTEGER PRIMARY KEY,
@@ -39,3 +40,31 @@ FROM Keskustelualue a
 LEFT JOIN Keskustelu k ON (a.id = k.alue) 
 LEFT JOIN Viesti v ON (k.id = v.keskustelu) 
 GROUP by a.id, a.nimi;
+=======
+CREATE TABLE Keskustelualue
+(
+  id INTEGER PRIMARY KEY,
+  nimi VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Keskustelu
+(
+  id INTEGER PRIMARY KEY,
+  aloittaja INTEGER NOT NULL,
+  alue INTEGER NOT NULL,
+  otsikko VARCHAR(100) NOT NULL,
+  FOREIGN KEY(aloittaja) REFERENCES Kayttaja(id),
+  FOREIGN KEY(alue) REFERENCES Keskustelualue(id)
+);
+
+CREATE TABLE Viesti
+(
+  id INTEGER PRIMARY KEY,
+  kirjoittaja INTEGER NOT NULL,
+  keskustelu INTEGER NOT NULL,
+  lahetysaika TIMESTAMP NOT NULL,
+  sisalto VARCHAR(500) NOT NULL,
+  FOREIGN KEY(kirjoittaja) REFERENCES Kayttaja(id), 
+  FOREIGN KEY(keskustelu) REFERENCES Keskustelu(id)
+);
+>>>>>>> cf1aef6212c4a8e4ac7b7322525adf0f03b03098

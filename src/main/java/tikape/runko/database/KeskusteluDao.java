@@ -24,7 +24,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = 3");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -38,38 +38,30 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Integer alue = rs.getInt("alue");
         String otsikko = rs.getString("otsikko");
 
-        Keskustelu k = new Keskustelu(id,aloittaja,alue,otsikko);
+        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return k;
+        return keskustelux;
     }
 
     @Override
     public List<Keskustelu> findAll() throws SQLException {
-
+        // Tässä on Tietokannat kovakoodattuna testausta varten
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
-        "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
-                + "MAX(v.lahetysaika) AS viimeisin "
-                + "FROM Keskustelualue a "
-                + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
-                + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
-                + "WHERE a.nimi = 'Ponit' "
-                + "GROUP BY otsikko "
-                + "ORDER BY avausaika DESC LIMIT 10"
-                );
+        "SELECT * FROM Keskustelu");
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
         while (rs.next()) {
    
-        Integer id = rs.getInt("id");
-        Integer aloittaja = rs.getInt("aloittaja");
-        Integer alue = rs.getInt("alue");
-        String otsikko = rs.getString("otsikko");
+            Integer id = rs.getInt("id");
+            Integer aloittaja = rs.getInt("aloittaja");
+            Integer alue = rs.getInt("alue");
+            String otsikko = rs.getString("otsikko");
 
             keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
         }
@@ -80,7 +72,40 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         return keskustelut;
     }
+    
+    public List<Keskustelu> findPerAlue() throws SQLException {
+        // Tässä on "Tietokannat" kovakoodattuna testausta varten
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(
+        "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
+                + "MAX(v.lahetysaika) AS viimeisin "
+                + "FROM Keskustelualue a "
+                + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
+                + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
+                + "WHERE a.nimi = 'Tietokannat' "
+                + "GROUP BY otsikko "
+                + "ORDER BY avausaika DESC LIMIT 10;"
+                );
 
+        ResultSet rs = stmt.executeQuery();
+        List<Keskustelu> keskustelut = new ArrayList<>();
+        while (rs.next()) {
+   
+            Integer id = rs.getInt("id");
+            Integer aloittaja = rs.getInt("aloittaja");
+            Integer alue = rs.getInt("alue");
+            String otsikko = rs.getString("otsikko");
+
+            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return keskustelut;
+    }
+    
     @Override
     public void delete(Integer key) throws SQLException {
         // ei toteutettu

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,6 +10,8 @@ package tikape.runko.domain;
  *
  * @author artoo
  */
+
+
 public class Keskustelualue {
 
     private Integer id;
@@ -18,6 +21,7 @@ public class Keskustelualue {
         this.id = id;
         this.nimi = nimi;
     }
+
 
     public Keskustelualue(String nimi) {
         this.id = null;
@@ -42,3 +46,4 @@ public class Keskustelualue {
 
     
 }
+
