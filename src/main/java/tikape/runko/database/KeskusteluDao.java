@@ -73,7 +73,6 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         return keskustelut;
     }
     
-    @Override
     public List<Keskustelu> findPerAlue() throws SQLException {
         // Tässä on "Tietokannat" kovakoodattuna testausta varten
         Connection connection = database.getConnection();
