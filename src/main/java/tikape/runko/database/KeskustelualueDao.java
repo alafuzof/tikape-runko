@@ -32,7 +32,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
 
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
     
-
+  @Override
+    public void add(Keskustelualue instance) throws SQLException {
+        // IMPLEMENTOI
+    }
+    
     @Override
     public  Keskustelualue findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();

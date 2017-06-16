@@ -43,8 +43,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Integer aloittaja = rs.getInt("aloittaja");
         Integer alue = rs.getInt("alue");
         String otsikko = rs.getString("otsikko");
+        Integer viestimaara = rs.getInt("viestimaara");
+        Timestamp avausaika = rs.getTimestamp("avausaika");
 
-        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
+        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko, viestimaara, avausaika);
 
         rs.close();
         stmt.close();
@@ -69,7 +71,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             Integer alue = rs.getInt("alue");
             String otsikko = rs.getString("otsikko");
 
-            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
+            Integer viestimaara = rs.getInt("viestimaara");
+            Timestamp avausaika = rs.getTimestamp("avausaika");
+
+        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko,viestimaara,avausaika));
         }
 
         rs.close();

@@ -12,7 +12,7 @@ import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.KeskustelualueDao;
 
 import tikape.runko.domain.Keskustelualue;
-import tikape.runko.domain.KeskustelualueListausItem;
+//import tikape.runko.domain.KeskustelualueListausItem;
 
 
 public class Main {
