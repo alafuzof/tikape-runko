@@ -10,9 +10,8 @@ public class Keskustelu {
     private String otsikko;
     private int viestimaara;
     private Timestamp avausaika;
-    
 
-    public Keskustelu(Integer id,Integer aloittaja,Integer alue,String otsikko, int viestimaara, Timestamp avausaika) {
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, int viestimaara, Timestamp avausaika) {
         this.id = id;
         this.aloittaja = aloittaja;
         this.alue = alue;
@@ -24,40 +23,46 @@ public class Keskustelu {
     public Integer getId() {
         return id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Integer getAloittaja() {
         return aloittaja;
     }
-    
+
     public void setAloittaja(Integer aloittaja) {
         this.aloittaja = aloittaja;
     }
-    
+
     public Integer getAlue() {
         return alue;
     }
-    
+
     public void setAlue(Integer alue) {
         this.alue = alue;
     }
-    
+
     public String getOtsikko() {
         return otsikko;
     }
-    
+
     public void setOtsikko(String otsikko) {
         this.otsikko = otsikko;
     }
-
     public Timestamp getAvausaika() {
         return avausaika;
     }
-
+    public void setAvausaika(Timestamp avausaika) {
+        this.avausaika = avausaika;
+    }
+    
     public int getViestimaara() {
         return viestimaara;
-    }    
+    }
+
+    public void setViestimaara(Integer viestimaara) {
+        this.viestimaara = viestimaara;
+    }
 }

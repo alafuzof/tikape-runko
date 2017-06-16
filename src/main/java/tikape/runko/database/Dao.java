@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public interface Dao<T, K> {
+    
     void add(T instance) throws SQLException;
 
     T findOne(K key) throws SQLException;
