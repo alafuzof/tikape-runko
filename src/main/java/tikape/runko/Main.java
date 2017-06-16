@@ -73,13 +73,6 @@ public class Main {
 
             return new ModelAndView(map, "testi");
         }, new ThymeleafTemplateEngine());
-        
-        /*get("/:alue", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("viesti", "Tervetuloa AHOT-foorumille !");
-
-            return new ModelAndView(map, "index");
-        }, new ThymeleafTemplateEngine());*/
 
         get("/keskustelut", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -105,8 +98,8 @@ public class Main {
 
         get("/keskustelutPerAlue", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("keskustelutPerAlue", keskusteluDao.findPerAlue());
-
+            map.put("keskustelut", keskusteluDao.findPerAlue("Tietokannat"));
+            //System.out.println("" + keskusteluDao.findPerAlue("Tietokannat").size() + " keskustelua");
             return new ModelAndView(map, "keskustelutPerAlue");
         }, new ThymeleafTemplateEngine());
 
@@ -117,6 +110,14 @@ public class Main {
             return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
 
+        get("/:alue/", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
+            
+            
+            return new ModelAndView(map, "keskustelutPerAlue");
+        }, new ThymeleafTemplateEngine());
+        
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viestit", viestiDao.findAll());
