@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Keskustelu;
@@ -19,6 +20,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     public KeskusteluDao(Database database) {
         this.database = database;
+    }
+
+    @Override
+    public void add(Keskustelu instance) throws SQLException {
+        // IMPLEMENTOI
     }
 
     @Override
@@ -73,19 +79,19 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         return keskustelut;
     }
     
-    public List<Keskustelu> findPerAlue() throws SQLException {
-        // Tässä on "Tietokannat" kovakoodattuna testausta varten
+    public List<Keskustelu> findPerAlue(String alue) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
-        "SELECT otsikko, COUNT(*) AS maara, MIN(v.lahetysaika) AS avausaika, "
+        "SELECT k.id AS id, otsikko, aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelualue a "
                 + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
-                + "WHERE a.nimi = 'Tietokannat' "
+                + "WHERE a.nimi = ? "
                 + "GROUP BY otsikko "
                 + "ORDER BY avausaika DESC LIMIT 10;"
                 );
+        stmt.setString(1, alue);
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
@@ -93,10 +99,12 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
    
             Integer id = rs.getInt("id");
             Integer aloittaja = rs.getInt("aloittaja");
-            Integer alue = rs.getInt("alue");
+            Integer alueID = rs.getInt("alue");
             String otsikko = rs.getString("otsikko");
+            int viestimaara = rs.getInt("viestimaara");
+            Timestamp avausaika = rs.getTimestamp("avausaika");
 
-            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
+            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko,viestimaara,avausaika));
         }
 
         rs.close();
