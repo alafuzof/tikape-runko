@@ -78,15 +78,15 @@ public class Database {
         lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko) VALUES (3, 1, 2, 'Mikä on sun lempiponi?');");
 
         lista.add("CREATE TABLE Viesti(id INTEGER PRIMARY KEY, kirjoittaja INTEGER NOT NULL, keskustelu INTEGER NOT NULL, lahetysaika TIMESTAMP NOT NULL, sisalto VARCHAR(500) NOT NULL, FOREIGN KEY(kirjoittaja) REFERENCES Kayttaja(id), FOREIGN KEY(keskustelu) REFERENCES Keskustelu(id));");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 1, '2017-06-01 18:00', 'Testiviesti 1');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (2, 1, '2017-06-01 18:05', 'Testiviesti 2');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (3, 1, '2017-06-01 18:07', 'Testiviesti 3');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (4, 1, '2017-06-01 18:10', 'Testiviesti 4');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (2, 2, '2017-06-01 19:21', 'Keskustelualueiden listaus');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (3, 2, '2017-06-01 20:07', 'Keskustelujen listaus tietyllä keskustelualueella');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (4, 2, '2017-06-01 21:49', 'Viestien listaus tietyssä keskustelussa');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:50', 'Ponit on ihania!');");
-        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:55', 'Eikö teistäkin!?!?!?');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 1, '2017-06-01 18:00:00.000', 'Testiviesti 1');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (2, 1, '2017-06-01 18:05:00.000', 'Testiviesti 2');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (3, 1, '2017-06-01 18:07:00.000', 'Testiviesti 3');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (4, 1, '2017-06-01 18:10:00.000', 'Testiviesti 4');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (2, 2, '2017-06-01 19:21:00.000', 'Keskustelualueiden listaus');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (3, 2, '2017-06-01 20:07:00.000', 'Keskustelujen listaus tietyllä keskustelualueella');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (4, 2, '2017-06-01 21:49:00.000', 'Viestien listaus tietyssä keskustelussa');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:50:00.000', 'Ponit on ihania!');");
+        lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:55:00.000', 'Eikö teistäkin!?!?!?');");
 
         return lista;
     }
