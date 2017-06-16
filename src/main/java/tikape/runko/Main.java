@@ -39,11 +39,11 @@ public class Main {
         }
         
         // Tulostetaan keskustelualuelistaus niinkuin tehtäväannossa
-        System.out.println("");
+        /*System.out.println("");
         System.out.print("*********************");
         System.out.println("Keskustelualuelistaus");
 
-        List<KeskustelualueListausItem> keskustelualuelistaus = new ArrayList<>();
+        /*List<KeskustelualueListausItem> keskustelualuelistaus = new ArrayList<>();
         
         keskustelualuelistaus = keskustelualueDao.findAllForList();
         Collections.sort(keskustelualuelistaus);
@@ -53,15 +53,33 @@ public class Main {
             
             System.out.println(k.getNimi() +"\t"+ k.getMaara() + "\t" + k.getViimeisin());
             
-        }
+        }*/
                 
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "Tervetuloa AHOT-foorumille !");
+            /*map.put("viesti", "Tervetuloa AHOT-foorumille !");*/
+            
+            map.put("alueet", keskustelualueDao.findAll());
+            
+            System.out.println(keskustelualueDao.findAll().size());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        get("/testi.html", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("viesti", "Tervetuloa AHOT-foorumille !");
+
+            return new ModelAndView(map, "testi");
+        }, new ThymeleafTemplateEngine());
+        
+        /*get("/:alue", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("viesti", "Tervetuloa AHOT-foorumille !");
+
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());*/
 
         get("/keskustelut", (req, res) -> {
             HashMap map = new HashMap<>();

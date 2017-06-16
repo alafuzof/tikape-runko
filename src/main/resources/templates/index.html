@@ -9,17 +9,10 @@
     <body>
         <h1>Tervetuloa keskustelemaan AHOT-foorumillamme!</h1>
         
-        <p>* TÄMÄ EI OLE LOPULLINEN USER INTERFACE *</p>
-        <p>Alla kovakoodattuja linkkejä testausta varten.</p>
-        <p> Päämenuun: http://0.0.0.0:4567/</p>
-        
-        <p><a href="/keskustelualue/1">Hae keskustelualue 1.</a></p>
-        <p><a href="/keskustelualue/2">Hae keskustelualue 2.</a></p>
-        
-        <p><a href="/keskustelut">Listaa keskustelut.</a></p>
-        <p><a href="/keskustelu/1">Hae keskustelun 1 otsikkotiedot.</a></p>
-        <p><a href="/keskustelu/2">Hae keskustelun 2 otsikkotiedot.</a></p>
-        <p><a href="/keskustelu/3">Hae keskustelun 3 otsikkotiedot.</a></p>
-          
+        <ul>
+            <li th:each="alue: ${alueet}">
+                <a th:text="${alue.nimi}" href="alue.html" th:href="@{~/{nimi}/(nimi=${alue.nimi})}">Alue</a>
+            </li>
+        </ul>
     </body>
 </html>
