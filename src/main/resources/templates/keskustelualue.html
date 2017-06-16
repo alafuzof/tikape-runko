@@ -7,7 +7,14 @@
     </head>
 
     <body>     
-        <h1><span th:text="${keskustelualue.nimi}"></span></h1>
-        <p>Olet nyt keskustelualueella: <span th:text="${keskustelualue.nimi}"></span></p>
+        <h1><span th:text="${alue}"></span></h1>
+        <p>Olet nyt keskustelualueella: <span th:text="${alue}"></span></p>
+        <p>Takaisin <a href="..">aluelistaukseen</a></p>
+        
+        <ol>
+            <li th:each="keskustelu: ${keskustelut}">
+                <a href="error.html" th:text="${keskustelu.otsikko}" th:href="@{~/{nimi}/{id}(nimi=${alue},id=${keskustelu.id})}">Keskustelu</a>
+            </li>
+        </ol>
     </body>
 </html>

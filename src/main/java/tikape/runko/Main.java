@@ -112,12 +112,22 @@ public class Main {
 
         get("/:alue/", (req, res) -> {
             HashMap map = new HashMap<>();
+            map.put("alue", req.params("alue"));
             map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
             
             
-            return new ModelAndView(map, "keskustelutPerAlue");
+            return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
         
+        get("/:alue/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("alue", req.params("alue"));
+            map.put("otsikko", "PLACEHOLDER");
+            //map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
+            
+            
+            return new ModelAndView(map, "keskustelu");
+        }, new ThymeleafTemplateEngine());
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viestit", viestiDao.findAll());
