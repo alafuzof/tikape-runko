@@ -8,10 +8,13 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
+import tikape.runko.database.KayttajaDao;
 import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.KeskustelualueDao;
 import tikape.runko.database.ViestiDao;
+import tikape.runko.domain.Kayttaja;
 import tikape.runko.domain.Keskustelualue;
+import tikape.runko.domain.Viesti;
 //import tikape.runko.domain.KeskustelualueListausItem;
 
 
@@ -27,6 +30,8 @@ public class Main {
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
         
         ViestiDao viestiDao = new ViestiDao(database);
+        
+        KayttajaDao kayttajaDao = new KayttajaDao(database);
         /*
         // Tulostetaan keskustelualueet
         List<Keskustelualue> keskustelualueet = new ArrayList<>();
@@ -123,7 +128,7 @@ public class Main {
         get("/:alue/:keskustelu", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("alue", req.params("alue"));
-            map.put("otsikko", "PLACEHOLDER");
+            map.put("otsikko", keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu"))).getOtsikko());
             map.put("viestit", viestiDao.findAllByKeskustelu(Integer.parseInt(req.params("keskustelu"))));
             //map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
             
@@ -135,6 +140,16 @@ public class Main {
             String kirjoittaja = req.queryParams("kirjoittaja");
             String viesti = req.queryParams("viesti");
             System.out.println("Kirjoittaja: " + kirjoittaja + " Viesti: " + viesti);
+            
+            Kayttaja k = kayttajaDao.findOne(kirjoittaja);
+            if(k == null) {
+                System.out.println("Luodaan uusi käyttäjä!");
+                k = kayttajaDao.add(new Kayttaja(kirjoittaja));
+            }
+            
+            int keskustelu = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu"))).getId();
+            
+            viestiDao.add(new Viesti(k.getKayttajaID(), k.getTunnus(), keskustelu, viesti));
             
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             return "";

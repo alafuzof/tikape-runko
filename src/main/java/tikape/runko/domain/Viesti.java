@@ -10,33 +10,47 @@ package tikape.runko.domain;
  * @author tikape
  */
 
+import java.sql.Timestamp;
 import java.util.Date;
         
 public class Viesti {
+    int viestiID;
     int kirjoittajaID;
     String kirjoittaja;
-    int viestiID;
     String sisalto;
-    Date lahetysaika;
+    Timestamp lahetysaika;
     int keskustelu;
 
     public Viesti() {
+        this.viestiID = -1;
         this.kirjoittajaID = -1;
         this.kirjoittaja = "Käyttäjä";
-        this.viestiID = -1;
+        
         this.keskustelu = -1;
-        this.lahetysaika = new Date();
+        Date date = new Date();
+        this.lahetysaika = new Timestamp(date.getTime());
         this.sisalto = "Viesti";
     }
-
-    public Viesti(int kirjoittajaID, String kirjoittaja, int viestiID, String sisalto, Date lahetysaika, int keskustelu) {
+    
+    public Viesti(int kirjoittajaID, String kirjoittaja, int keskustelu, String sisalto) {
+        this.viestiID = -1;
         this.kirjoittajaID = kirjoittajaID;
         this.kirjoittaja = kirjoittaja;
-        this.viestiID = viestiID;
-        this.sisalto = sisalto;
-        this.lahetysaika = lahetysaika;
         this.keskustelu = keskustelu;
+        Date date = new Date();
+        this.lahetysaika = new Timestamp(date.getTime());
+        this.sisalto = sisalto;
     }
+
+    public Viesti(int viestiID, int kirjoittajaID, String kirjoittaja, String sisalto, Timestamp lahetysaika, int keskustelu) {
+        this.viestiID = viestiID;
+        this.kirjoittajaID = kirjoittajaID;
+        this.kirjoittaja = kirjoittaja;
+        this.keskustelu = keskustelu;
+        this.lahetysaika = lahetysaika;
+        this.sisalto = sisalto;
+    }
+    
 
     public int getKirjoittajaID() {
         return kirjoittajaID;
@@ -50,7 +64,7 @@ public class Viesti {
         return kirjoittaja;
     }
 
-    public Date getLahetysaika() {
+    public Timestamp getLahetysaika() {
         return lahetysaika;
     }
 
