@@ -130,6 +130,15 @@ public class Main {
             
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
+        
+        post("/:alue/:keskustelu", (req, res) -> {
+            String kirjoittaja = req.queryParams("kirjoittaja");
+            String viesti = req.queryParams("viesti");
+            System.out.println("Kirjoittaja: " + kirjoittaja + " Viesti: " + viesti);
+            
+            res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
+            return "";
+        });
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viestit", viestiDao.findAll());

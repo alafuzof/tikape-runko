@@ -17,5 +17,13 @@
                  <p th:text="${viesti.sisalto}"></p>
             </li>
         </ol>
+        
+        <form method="POST" action="">
+            Nimimerkki:<br/>
+            <input type="text" name="kirjoittaja"/><br/>
+            Viesti:<br/>
+            <input type="text" name="viesti"/><br/>
+            <input type="submit" value="Lähetä!"/>            
+        </form>
     </body>
 </html>
