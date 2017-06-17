@@ -11,7 +11,7 @@
         
         <ul>
             <li th:each="keskustelualue: ${keskustelualueet}">
-                <a th:text="${keskustelualue.nimi}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
+                <a th:text="${keskustelualue.nimi} + '    ' + '('+${keskustelualue.maara}+')' + '    ' + ${keskustelualue.viimeisin}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
             </li>
         </ul>
     </body>
