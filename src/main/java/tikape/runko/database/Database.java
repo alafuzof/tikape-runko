@@ -72,10 +72,10 @@ public class Database {
         lista.add("INSERT INTO Keskustelualue (id, nimi) VALUES (1, 'Tietokannat');");
         lista.add("INSERT INTO Keskustelualue (id, nimi) VALUES (2, 'Ponit');");
             
-        lista.add("CREATE TABLE Keskustelu(id INTEGER PRIMARY KEY, aloittaja INTEGER NOT NULL, alue INTEGER NOT NULL, otsikko VARCHAR(100) NOT NULL, viestimaara INTEGER, avausaika TIMESTAMP, FOREIGN KEY(aloittaja) REFERENCES Kayttaja(id), FOREIGN KEY(alue) REFERENCES Keskustelualue(id));");
-        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko, viestimaara, avausaika) VALUES (1, 2, 1, 'Tikape kotitehtävät', 4, '2017-06-01 18:00:00.000');");
-        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko, viestimaara, avausaika) VALUES (2, 3, 1, 'Käyttötapaukset', 3, '2017-06-01 18:00:00.000');");
-        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko, viestimaara, avausaika) VALUES (3, 1, 2, 'Mikä on sun lempiponi?', 2, '2017-06-01 18:00:00.000');");
+        lista.add("CREATE TABLE Keskustelu(id INTEGER PRIMARY KEY, aloittaja INTEGER NOT NULL, alue INTEGER NOT NULL, otsikko VARCHAR(100) NOT NULL, FOREIGN KEY(aloittaja) REFERENCES Kayttaja(id), FOREIGN KEY(alue) REFERENCES Keskustelualue(id));");
+        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko) VALUES (1, 2, 1, 'Tikape kotitehtävät');");
+        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko) VALUES (2, 3, 1, 'Käyttötapaukset');");
+        lista.add("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko) VALUES (3, 1, 2, 'Mikä on sun lempiponi?');");
 
         lista.add("CREATE TABLE Viesti(id INTEGER PRIMARY KEY, kirjoittaja INTEGER NOT NULL, keskustelu INTEGER NOT NULL, lahetysaika TIMESTAMP NOT NULL, sisalto VARCHAR(500) NOT NULL, FOREIGN KEY(kirjoittaja) REFERENCES Kayttaja(id), FOREIGN KEY(keskustelu) REFERENCES Keskustelu(id));");
         lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 1, '2017-06-01 18:00:00.000', 'Testiviesti 1');");
