@@ -25,7 +25,7 @@ public class Main {
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
-        
+        /*
         // Tulostetaan keskustelualueet
         List<Keskustelualue> keskustelualueet = new ArrayList<>();
         
@@ -37,7 +37,7 @@ public class Main {
             System.out.println(k.getNimi());
             
         }
-        
+        */
         // Tulostetaan keskustelualuelistaus niinkuin tehtäväannossa
         /*System.out.println("");
         System.out.print("*********************");
@@ -56,13 +56,12 @@ public class Main {
         }*/
                 
 
-        get("/", (req, res) -> {
+        get("/index", (req, res) -> {
             HashMap map = new HashMap<>();
-            /*map.put("viesti", "Tervetuloa AHOT-foorumille !");*/
             
-            map.put("alueet", keskustelualueDao.findAll());
+            map.put("keskustelualueet", keskustelualueDao.findAll());
             
-            System.out.println(keskustelualueDao.findAll().size());
+            //System.out.println(keskustelualueDao.findAll().size());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());

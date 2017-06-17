@@ -30,7 +30,12 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
+        //PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+                + "MAX(v.lahetysaika) AS viimeisin "
+                + "FROM Keskustelu k "
+                + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
+                + "WHERE k.id = ?;");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();

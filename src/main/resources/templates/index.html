@@ -10,8 +10,8 @@
         <h1>Tervetuloa keskustelemaan AHOT-foorumillamme!</h1>
         
         <ul>
-            <li th:each="alue: ${alueet}">
-                <a th:text="${alue.nimi}" href="alue.html" th:href="@{~/{nimi}/(nimi=${alue.nimi})}">Alue</a>
+            <li th:each="Keskustelualue: ${keskustelualueet}">
+                <a th:text="${keskustelu.nimi}" th:href="keskustelu.html" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
             </li>
         </ul>
     </body>
