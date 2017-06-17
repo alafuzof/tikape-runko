@@ -23,8 +23,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
 
     @Override
-    public void add(Keskustelu instance) throws SQLException {
+    public Keskustelu add(Keskustelu instance) throws SQLException {
         // IMPLEMENTOI
+        return null;
     }
 
     @Override

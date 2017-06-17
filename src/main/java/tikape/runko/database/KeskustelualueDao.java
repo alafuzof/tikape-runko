@@ -33,8 +33,9 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
     
   @Override
-    public void add(Keskustelualue instance) throws SQLException {
+    public Keskustelualue add(Keskustelualue instance) throws SQLException {
         // IMPLEMENTOI
+        return null;
     }
     
     @Override

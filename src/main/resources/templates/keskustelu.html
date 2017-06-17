@@ -9,7 +9,7 @@
     <body>     
         <h1><span th:text="${otsikko}"></span></h1>
         <p>Olet nyt keskustelussa: <span th:text="${otsikko}">Keskustelu</span></p>
-        <p>Takaisin <a href="..">keskustelualueelle</a></p>
+        <p>Takaisin <a href="../index">aluelistaukseen</a></p>
         
         <ol>
              <li th:each="viesti: ${viestit}">

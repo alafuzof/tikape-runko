@@ -27,8 +27,19 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     }
 
     @Override
-    public void add(Viesti instance) throws SQLException {
-        // Implementoi
+    public Viesti add(Viesti v) throws SQLException {
+        Connection connection = this.database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (?, ?, ?, ?)");
+        stmt.setInt(1, v.getKirjoittajaID());
+        stmt.setInt(2, v.getKeskustelu());
+        stmt.setTimestamp(3, v.getLahetysaika());
+        stmt.setString(4, v.getSisalto());
+        
+        stmt.executeUpdate();
+        
+        stmt.close();
+        connection.close();
+        return v; // Note may contain invalid id!
     }
    
     
@@ -66,7 +77,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer keskustelu_id = rs.getInt("keskustelu_id");
 
 
-            viestit.add(new Viesti(kirjoittaja_id, kirjoittaja, viesti_id, sisalto, lahetysaika, keskustelu_id));
+            viestit.add(new Viesti(viesti_id, kirjoittaja_id, kirjoittaja, sisalto, lahetysaika, keskustelu_id));
         }
 
         rs.close();
