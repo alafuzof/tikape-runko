@@ -61,9 +61,9 @@ public class Main {
         get("/index", (req, res) -> {
             HashMap map = new HashMap<>();
             
-            map.put("keskustelualueet", keskustelualueDao.findAll());
+            map.put("keskustelualueet", keskustelualueDao.findAllForList());
             
-            //System.out.println(keskustelualueDao.findAll().size());
+            System.out.println(keskustelualueDao.findAllForList());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
@@ -92,7 +92,7 @@ public class Main {
         // Here comes the missing DAO-modules calls:
         get("/keskustelualueet", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("keskustelualueet", keskustelualueDao.findAll());
+            map.put("keskustelualueet", keskustelualueDao.findAllForList());
 
             return new ModelAndView(map, "keskustelualueet");
         }, new ThymeleafTemplateEngine());
