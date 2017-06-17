@@ -10,5 +10,12 @@
         <h1><span th:text="${otsikko}"></span></h1>
         <p>Olet nyt keskustelussa: <span th:text="${otsikko}">Keskustelu</span></p>
         <p>Takaisin <a href="..">keskustelualueelle</a></p>
+        
+        <ol>
+             <li th:each="viesti: ${viestit}">
+                 <p th:text="${viesti.kirjoittaja}"></p>
+                 <p th:text="${viesti.sisalto}"></p>
+            </li>
+        </ol>
     </body>
 </html>

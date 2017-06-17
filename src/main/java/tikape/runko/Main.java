@@ -10,7 +10,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.KeskustelualueDao;
-
+import tikape.runko.database.ViestiDao;
 import tikape.runko.domain.Keskustelualue;
 //import tikape.runko.domain.KeskustelualueListausItem;
 
@@ -25,6 +25,8 @@ public class Main {
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
         
         KeskustelualueDao keskustelualueDao = new KeskustelualueDao(database);
+        
+        ViestiDao viestiDao = new ViestiDao(database);
         /*
         // Tulostetaan keskustelualueet
         List<Keskustelualue> keskustelualueet = new ArrayList<>();
@@ -118,10 +120,11 @@ public class Main {
             return new ModelAndView(map, "keskustelualue");
         }, new ThymeleafTemplateEngine());
         
-        get("/:alue/:id", (req, res) -> {
+        get("/:alue/:keskustelu", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("alue", req.params("alue"));
             map.put("otsikko", "PLACEHOLDER");
+            map.put("viestit", viestiDao.findAllByKeskustelu(Integer.parseInt(req.params("keskustelu"))));
             //map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
             
             
