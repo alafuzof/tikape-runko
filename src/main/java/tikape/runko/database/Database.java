@@ -61,6 +61,7 @@ public class Database {
         ArrayList<String> lista = new ArrayList<>();
 
 // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
+/*
         lista.add("CREATE TABLE Kayttaja(id INTEGER PRIMARY KEY, tunnus VARCHAR(20) NOT NULL UNIQUE, salasana VARCHAR(20) DEFAULT NULL, admin BOOLEAN DEFAULT 0);");
         lista.add("INSERT INTO Kayttaja (id, tunnus, salasana, admin) VALUES (0, 'admin', 'admin', 1);");
         lista.add("INSERT INTO Kayttaja (id, tunnus) VALUES (1, 'Aleksander');");
@@ -88,6 +89,21 @@ public class Database {
         lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:50:00.000', 'Ponit on ihania!');");
         lista.add("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (1, 3, '2017-06-01 23:55:00.000', 'Eikö teistäkin!?!?!?');");
 
+        lista.add("CREATE VIEW KeskustelualueList AS "
+        + "SELECT a.id, a.nimi, COUNT(v.id) as maara, MAX(lahetysaika) AS viimeisin "
+        + "FROM Keskustelualue a "
+        + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
+        + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
+        + "GROUP by a.id, a.nimi;");
+
+        lista.add("CREATE VIEW KeskusteluList AS "
+        + "SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, "
+        + "COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+        + "MAX(v.lahetysaika) AS viimeisin FROM Keskustelu k "
+        + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
+        + "GROUP BY k.id, k.otsikko, k.aloittaja, k.alue "
+        + "ORDER BY MAX(v.lahetysaika) DESC;");
+ */       
         return lista;
     }
 }
