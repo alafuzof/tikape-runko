@@ -37,8 +37,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         System.out.println("LISÄTÄÄN KESKUSTELU");
         
         int i = getNewid(connection);
+        System.out.print("Tämä on uusi id: ");
+        System.out.println("i");
         
         k.setId(i);
+        
         
         stmt.close();
         connection.close();
@@ -49,7 +52,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
          PreparedStatement stmt = conn.prepareStatement(
         "SELECT last_insert_rowid()");       
 
- 
+        
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
         if (!hasOne) {
