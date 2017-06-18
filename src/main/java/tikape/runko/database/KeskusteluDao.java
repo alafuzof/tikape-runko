@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import tikape.runko.domain.Keskustelu;
 
 public class KeskusteluDao implements Dao<Keskustelu, Integer> {
@@ -23,16 +25,48 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
 
     @Override
-    public Keskustelu add(Keskustelu instance) throws SQLException {
-        // IMPLEMENTOI
-        return null;
+    public Keskustelu add(Keskustelu k) throws SQLException {
+        Connection connection = this.database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (aloittaja, alue, otsikko) VALUES (?, ?, ?)");
+        stmt.setInt(1, k.getAloittaja());
+        stmt.setInt(2, k.getAlue());
+        stmt.setString(3, k.getOtsikko());
+        
+        stmt.executeUpdate();
+        
+        System.out.println("LISÄTÄÄN KESKUSTELU");
+        
+
+        //int i = getNewid(connection); Tarvitaanko tätä?
+        //k.setId(i); 
+
+        
+        
+        stmt.close();
+        connection.close();
+        return k; 
     }
 
+    /* Tarvitaanko tätä
+    public int getNewid(Connection conn) throws SQLException {
+         PreparedStatement stmt = conn.prepareStatement(
+        "SELECT last_insert_rowid()");       
+
+        
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return 0;
+        }    
+        int id = rs.getInt("id"); // <-- Tossa kyselyssä ei taida olla id:tä?
+        return id;
+    } */
+    
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         //PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
-        PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+        PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, COUNT(v.id) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelu k "
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
@@ -52,7 +86,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Integer viestimaara = rs.getInt("viestimaara");
         Timestamp avausaika = rs.getTimestamp("avausaika");
 
-        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko, viestimaara, avausaika);
+        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
+        
+        keskustelux.setViestimaara(viestimaara);
+        keskustelux.setAvausaika(avausaika);
+        
 
         rs.close();
         stmt.close();
@@ -93,7 +131,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public List<Keskustelu> findPerAlue(String alue) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
-        "SELECT k.id AS id, otsikko, aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+        "SELECT k.id AS id, otsikko, aloittaja, k.alue AS alue, COUNT(v.id) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelualue a "
                 + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "

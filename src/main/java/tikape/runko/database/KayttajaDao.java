@@ -31,6 +31,8 @@ public class KayttajaDao implements Dao<Kayttaja, String> {
     @Override
     public Kayttaja add(Kayttaja k) throws SQLException {
         Connection connection = this.database.getConnection();
+        
+        
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (tunnus) VALUES (?)");
         stmt.setString(1, k.getTunnus());
         

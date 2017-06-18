@@ -11,7 +11,7 @@ public class Keskustelu {
     private int viestimaara;
     private Timestamp avausaika;
 
-    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, int viestimaara, Timestamp avausaika) {
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko) {
         this.id = id;
         this.aloittaja = aloittaja;
         this.alue = alue;
@@ -20,6 +20,24 @@ public class Keskustelu {
         this.avausaika = avausaika;
     }
 
+    public Keskustelu(Integer aloittaja, Integer alue, String otsikko) {
+        this.id = null;
+        this.aloittaja = aloittaja;
+        this.alue = alue;
+        this.otsikko = otsikko;
+        this.viestimaara = 0;
+        this.avausaika = null;
+    }    
+
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, Integer viestimaara, Timestamp avausaika) {
+        this.id = id;
+        this.aloittaja = aloittaja;
+        this.alue = alue;
+        this.otsikko = otsikko;
+        this.viestimaara = viestimaara;
+        this.avausaika = avausaika;
+    }
+    
     public Integer getId() {
         return id;
     }

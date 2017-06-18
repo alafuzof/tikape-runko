@@ -173,7 +173,7 @@ public class Database {
         + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
         + "GROUP BY k.id, k.otsikko, k.aloittaja, k.alue "
         + "ORDER BY MAX(v.lahetysaika) DESC;");
- */       
+*/      
         return lista;
     }
 }
