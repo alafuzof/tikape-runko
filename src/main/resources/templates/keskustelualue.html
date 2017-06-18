@@ -17,5 +17,16 @@
                 <p>Keskustelualueen viestien lukumäärä: <span th:text="${keskustelu.viestimaara}">XX</span></p>
             </li>
         </ol>
+        
+        <h3>Voit aloittaa uuden keskustelun tästä: </h3>
+        <form method="POST" action="">
+            Nimimerkki:<br/>
+            <input type="text" name="kirjoittaja"/><br/>
+            Keskustelun otsikko:<br/>
+            <input type="text" name="keskustelun otsikko"/><br/> 
+            <input type="submit" value="Lähetä!"/> 
+        </form>
+
+        <p>Takaisin <a href="../index">aluelistaukseen</a></p>
     </body>
 </html>

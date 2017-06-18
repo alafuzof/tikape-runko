@@ -23,9 +23,19 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
 
     @Override
-    public Keskustelu add(Keskustelu instance) throws SQLException {
-        // IMPLEMENTOI
-        return null;
+    public Keskustelu add(Keskustelu k) throws SQLException {
+        Connection connection = this.database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko, avausaika) VALUES (?, ?, ?, ?)");
+        stmt.setInt(1, k.getId());
+        stmt.setInt(2, k.getAloittaja());
+        stmt.setInt(3, k.getAlue());
+        stmt.setString(4, k.getOtsikko());
+        
+        stmt.executeUpdate();
+        
+        stmt.close();
+        connection.close();
+        return k; // Note may contain invalid id!
     }
 
     @Override
@@ -52,7 +62,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Integer viestimaara = rs.getInt("viestimaara");
         Timestamp avausaika = rs.getTimestamp("avausaika");
 
-        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko, viestimaara, avausaika);
+        Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
 
         rs.close();
         stmt.close();
@@ -80,7 +90,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             Integer viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
 
-        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko,viestimaara,avausaika));
+        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
         }
 
         rs.close();
@@ -115,7 +125,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             int viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
 
-            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko,viestimaara,avausaika));
+            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko));
         }
 
         rs.close();
