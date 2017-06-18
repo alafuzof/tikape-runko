@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import tikape.runko.domain.Keskustelu;
 
 public class KeskusteluDao implements Dao<Keskustelu, Integer> {
@@ -25,19 +27,38 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public Keskustelu add(Keskustelu k) throws SQLException {
         Connection connection = this.database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (id, aloittaja, alue, otsikko, avausaika) VALUES (?, ?, ?, ?)");
-        stmt.setInt(1, k.getId());
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (aloittaja, alue, otsikko) VALUES (?, ?, ?)");
         stmt.setInt(2, k.getAloittaja());
         stmt.setInt(3, k.getAlue());
         stmt.setString(4, k.getOtsikko());
         
         stmt.executeUpdate();
         
+        System.out.println("LISÄTÄÄN KESKUSTELU");
+        
+        int i = getNewid(connection);
+        
+        k.setId(i);
+        
         stmt.close();
         connection.close();
-        return k; // Note may contain invalid id!
+        return k; 
     }
 
+    public int getNewid(Connection conn) throws SQLException {
+         PreparedStatement stmt = conn.prepareStatement(
+        "SELECT last_insert_rowid()");       
+
+ 
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return 0;
+        }    
+        int id = rs.getInt("id");
+        return id;
+    } 
+    
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();

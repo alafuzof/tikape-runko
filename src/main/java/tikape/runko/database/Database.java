@@ -61,7 +61,7 @@ public class Database {
         ArrayList<String> lista = new ArrayList<>();
 
 // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-
+/*
         lista.add("CREATE TABLE Kayttaja(id INTEGER PRIMARY KEY, tunnus VARCHAR(20) NOT NULL UNIQUE, salasana VARCHAR(20) DEFAULT NULL, admin BOOLEAN DEFAULT 0);");
         lista.add("INSERT INTO Kayttaja (id, tunnus, salasana, admin) VALUES (0, 'admin', 'admin', 1);");
         lista.add("INSERT INTO Kayttaja (id, tunnus) VALUES (1, 'Aleksander');");
@@ -103,7 +103,7 @@ public class Database {
         + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
         + "GROUP BY k.id, k.otsikko, k.aloittaja, k.alue "
         + "ORDER BY MAX(v.lahetysaika) DESC;");
-      
+*/      
         return lista;
     }
 }

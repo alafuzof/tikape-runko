@@ -97,12 +97,14 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
-        post("/:alue", (req, res) -> {
+        post("/:keskustelualue/:id", (req, res) -> {
+
             String kayttaja = req.queryParams("kayttaja");
-            String keskustelualue = req.queryParams("keskustelualue");
-            String keskustelu = req.queryParams("keskustelu");
-            String viesti = req.queryParams("viesti");
-            System.out.println("Kirjoittaja: " + kayttaja + " Keskustelualue: " + keskustelualue);
+            //String keskustelualue = req.queryParams("keskustelualue");
+            String keskustelu = req.queryParams("keskustelun otsikko");
+                   
+
+            //System.out.println("Kirjoittaja: " + kayttaja + " Keskustelualue: " + keskustelualue);
             
             Kayttaja k = kayttajaDao.findOne(kayttaja);
             if(k == null) {
@@ -110,17 +112,24 @@ public class Main {
                 k = kayttajaDao.add(new Kayttaja(kayttaja));
             }
             //Keskustelu k = keskusteluDao.findOne(1);
-            Keskustelu kesk = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu")));
+            //Keskustelu kesk = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu")));
             //if(kesk == 0) tsekkaa !
             
             System.out.println("Luodaan uusi keskustelu!");
             //Keskustelu kes = keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params("id")), Integer.parseInt(req.params("aloittaja")), Integer.parseInt(req.params("alue")), req.params("otsikko")));
-            Keskustelu newKesk = keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params("keskustelu")), k.getKayttajaID(), Integer.parseInt(req.params("alue")), req.params("otsikko")));
+            //Keskustelu newKesk = keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params("keskustelu")), k.getKayttajaID(), Integer.parseInt(req.params("alue")), req.params("otsikko")));
             
             
             //kesk = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu")));
             
-            res.redirect("/" + newKesk.getOtsikko() + "/" + Integer.toString (newKesk.getId()));
+            //res.redirect("/" + newKesk.getOtsikko() + "/" + Integer.toString (newKesk.getId()));
+            
+            int keskustelualueid = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelualue"))).getId();
+            
+            keskusteluDao.add(new Keskustelu(k.getKayttajaID(), keskustelualueid, keskustelu));
+            
+            res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
+            
             
             return "";
         });
@@ -185,7 +194,7 @@ public class Main {
             return "";
         });
 
-        
+        /*
         post("/:keskustelualue", (req, res) -> {
             String kirjoittaja = req.queryParams("kirjoittaja");
             String keskustelunotsikko = req.queryParams("keskustelunotsikko");
@@ -196,8 +205,7 @@ public class Main {
                 System.out.println("Luodaan uusi käyttäjä!");
                 k = kayttajaDao.add(new Kayttaja(kirjoittaja));
             }
-            
-            
+          
             
             int keskustelualue = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelualue"))).getId();
             
@@ -206,6 +214,7 @@ public class Main {
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             return "";
         });        
+*/
         
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
