@@ -4,14 +4,24 @@
     <head>
         <title>A@HOT-Keskustelufoorumi</title>
         <meta charset="utf-8" />
+
+        <style>
+        body {background-color: powderblue;}
+        h1   {color: blue;}
+        h3   {color: brown;}
+        </style>
+    
+        
     </head>
 
     <body>
         <h1>Tervetuloa keskustelemaan AHOT-foorumillamme!</h1>
-        
+        <h3>Keskustelualueet</h3> 
         <ul>
             <li th:each="keskustelualue: ${keskustelualueet}">
-                <a th:text="${keskustelualue.nimi} + '    ' + '('+${keskustelualue.maara}+')' + '    ' + ${keskustelualue.viimeisin}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
+               
+                <a th:text="${keskustelualue.nimi}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
+                <p>Viestien määrä: <span th:text="${keskustelualue.maara}">XX</span><span>.  Viimeisin viesti:  </span><span th:text="${keskustelualue.viimeisin}">YY</span></p>
             </li>
         </ul>
     </body>
