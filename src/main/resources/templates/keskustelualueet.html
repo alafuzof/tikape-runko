@@ -8,7 +8,6 @@
 
     <body>
                 <h1>Keskustelualueet</h1>
-
         <ol>
             <li th:each="keskustelualueet: ${keskustelualueet}">
                 <p><span th:text="${keskustelualue.nimi}"></span> <a th:href="${'/keskustelut/' + keskustelu.id}">linkki</a></p>
