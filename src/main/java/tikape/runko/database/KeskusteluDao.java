@@ -70,7 +70,8 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelu k "
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
-                + "WHERE k.id = ?;");
+                + "WHERE k.id = ? "
+                + "GROUP BY k.id, k.otsikko, k.aloittaja, k.alue;");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
