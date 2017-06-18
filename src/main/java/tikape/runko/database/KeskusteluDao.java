@@ -28,23 +28,23 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public Keskustelu add(Keskustelu k) throws SQLException {
         Connection connection = this.database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (aloittaja, alue, otsikko) VALUES (?, ?, ?)");
-        stmt.setInt(2, k.getAloittaja());
-        stmt.setInt(3, k.getAlue());
-        stmt.setString(4, k.getOtsikko());
+        stmt.setInt(1, k.getAloittaja());
+        stmt.setInt(2, k.getAlue());
+        stmt.setString(3, k.getOtsikko());
         
         stmt.executeUpdate();
         
         System.out.println("LISÄTÄÄN KESKUSTELU");
         
-        int i = getNewid(connection);
-        
-        k.setId(i);
+        //int i = getNewid(connection); Tarvitaanko tätä?
+        //k.setId(i); 
         
         stmt.close();
         connection.close();
         return k; 
     }
 
+    /* Tarvitaanko tätä
     public int getNewid(Connection conn) throws SQLException {
          PreparedStatement stmt = conn.prepareStatement(
         "SELECT last_insert_rowid()");       
@@ -55,9 +55,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         if (!hasOne) {
             return 0;
         }    
-        int id = rs.getInt("id");
+        int id = rs.getInt("id"); // <-- Tossa kyselyssä ei taida olla id:tä?
         return id;
-    } 
+    } */
     
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
