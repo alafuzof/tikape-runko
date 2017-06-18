@@ -14,6 +14,7 @@ import tikape.runko.database.KeskustelualueDao;
 import tikape.runko.database.ViestiDao;
 import tikape.runko.domain.Kayttaja;
 import tikape.runko.domain.Keskustelualue;
+import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Viesti;
 //import tikape.runko.domain.KeskustelualueListausItem;
 
@@ -132,7 +133,7 @@ public class Main {
             map.put("viestit", viestiDao.findAllByKeskustelu(Integer.parseInt(req.params("keskustelu"))));
             //map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
             
-            
+       
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
@@ -154,6 +155,28 @@ public class Main {
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             return "";
         });
+        
+        post("/:keskustelualue", (req, res) -> {
+            String kirjoittaja = req.queryParams("kirjoittaja");
+            String keskustelunotsikko = req.queryParams("keskustelunotsikko");
+            System.out.println("Kirjoittaja: " + kirjoittaja + " Viesti: " + keskustelunotsikko);
+            
+            Kayttaja k = kayttajaDao.findOne(kirjoittaja);
+            if(k == null) {
+                System.out.println("Luodaan uusi käyttäjä!");
+                k = kayttajaDao.add(new Kayttaja(kirjoittaja));
+            }
+            
+            
+            
+            int keskustelualue = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelualue"))).getId();
+            
+            keskusteluDao.add(new Keskustelu(k.getKayttajaID(), keskustelualue, keskustelunotsikko));
+            
+            res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
+            return "";
+        });        
+        
 //        get("/viestit", (req, res) -> {
 //            HashMap map = new HashMap<>();
 //            map.put("viestit", viestiDao.findAll());
