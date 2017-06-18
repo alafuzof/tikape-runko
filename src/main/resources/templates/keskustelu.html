@@ -2,28 +2,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Keskustelu</title>
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title th:text="${otsikko}">Keskustelu</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
 
-    <body>     
-        <h1><span th:text="${otsikko}"></span></h1>
-        <p>Olet nyt keskustelussa: <span th:text="${otsikko}">Keskustelu</span></p>
-        <p>Takaisin <a href="../index">aluelistaukseen</a></p>
-        
-        <ol>
-             <li th:each="viesti: ${viestit}">
-                 <p th:text="${viesti.kirjoittaja}"></p>
-                 <p th:text="${viesti.sisalto}"></p>
-            </li>
-        </ol>
-        
-        <form method="POST" action="">
-            Nimimerkki:<br/>
-            <input type="text" name="kirjoittaja"/><br/>
-            Viesti:<br/>
-            <input type="text" name="viesti"/><br/>
-            <input type="submit" value="Lähetä!"/>            
-        </form>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1 th:text="${otsikko}">Otsikko</h1>
+                <p>Takaisin keskustelualueelle <a href="" th:href="@{~/{alue}/(alue=${alue})}" th:text="${alue}">Alue</a></p>
+            </div>
+
+            <div class="row" th:each="viesti: ${viestit}">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8"><p><strong th:text="${viesti.kirjoittaja}">Kirjoittaja</strong> sanoi <em th:text="${#dates.format(viesti.lahetysaika, 'yyyy-MM-dd hh:mm:ss')}">ajanhetki</em>:</p></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 well"><p th:text="${viesti.sisalto}">Viesti</p></div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 bg-info">
+                    <h3>Lähetä uusi viesti:</h3>
+                    <form method="POST" action="">
+                        <div class="form-group">
+                            <label for="kirjoittaja">Nimimerkki:</label>
+                            <input type="text" name="kirjoittaja" id="kirjoittaja" class="form-control" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="viesti">Viesti:</label>
+                            <textarea name="viesti" id="viesti" class="form-control" rows="4" required="required" />
+                        </div>
+                        <button type="submit" class="btn btn-default">Lähetä!</button>
+                        <p></p>
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            
+            <div class="row"><p></p></div>
+        </div>
     </body>
 </html>
