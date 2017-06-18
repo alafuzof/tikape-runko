@@ -32,7 +32,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Viesti (kirjoittaja, keskustelu, lahetysaika, sisalto) VALUES (?, ?, ?, ?)");
         stmt.setInt(1, v.getKirjoittajaID());
         stmt.setInt(2, v.getKeskustelu());
-        stmt.setString(3, "" + v.getLahetysaika());
+        stmt.setTimestamp(3, v.getLahetysaika());
         stmt.setString(4, v.getSisalto());
         
         System.out.print("Lähetysaika: ");
