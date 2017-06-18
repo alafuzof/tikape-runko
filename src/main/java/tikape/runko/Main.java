@@ -177,20 +177,19 @@ public class Main {
         
         post("/:alue/:keskustelu", (req, res) -> {
             String kirjoittaja = req.queryParams("kirjoittaja");
-            String viesti = req.queryParams("viesti");
-            System.out.println("Kirjoittaja: " + kirjoittaja + " Viesti: " + viesti);
+            int alue = Integer.parseInt(req.queryParams("alue"));
+            String keskustelu = req.queryParams("keskustelu");
+            System.out.println("Kirjoittaja: " + kirjoittaja + " Keskustelu: " + keskustelu);
             
             Kayttaja k = kayttajaDao.findOne(kirjoittaja);
             if(k == null) {
                 System.out.println("Luodaan uusi käyttäjä!");
-                k = kayttajaDao.add(new Kayttaja(kirjoittaja));
+                kayttajaDao.add(new Kayttaja(kirjoittaja));
             }
             
-            int keskustelu = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu"))).getId();
+            keskusteluDao.add(new Keskustelu(5, 3, alue, keskustelu));
             
-            viestiDao.add(new Viesti(k.getKayttajaID(), k.getTunnus(), keskustelu, viesti));
-            
-            res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
+            res.redirect("/" + req.params("keskustelu") + "/5");
             return "";
         });
 

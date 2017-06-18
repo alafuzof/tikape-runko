@@ -19,11 +19,13 @@
         </ol>
         
         <h3>Voit aloittaa uuden keskustelun tästä: </h3>
-        <form method="POST" action="">
+        <form method="POST" action="/:alue/:keskustelu">
             Nimimerkki:<br/>
             <input type="text" name="kirjoittaja"/><br/>
+            Keskustelualue:<br/>
+            <input type="text" name="aluetunnus"/><br/>
             Keskustelun otsikko:<br/>
-            <input type="text" name="keskustelunotsikko"/><br/> 
+            <input type="text" name="keskustelu"/><br/> 
             <input type="submit" value="Lähetä!"/> 
         </form>
 
