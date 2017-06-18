@@ -68,7 +68,7 @@ public class Main {
             
             map.put("keskustelualueet", keskustelualueDao.findAllForList());
             
-            System.out.println(keskustelualueDao.findAllForList());
+            //System.out.println(keskustelualueDao.findAllForList());
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
