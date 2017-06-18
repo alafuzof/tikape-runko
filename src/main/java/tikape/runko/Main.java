@@ -1,5 +1,6 @@
 package tikape.runko;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.KeskustelualueDao;
 import tikape.runko.database.ViestiDao;
 import tikape.runko.domain.Kayttaja;
+import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Keskustelualue;
 import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Viesti;
@@ -94,8 +96,35 @@ public class Main {
 
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
+        
+        post("/:alue", (req, res) -> {
+            String kayttaja = req.queryParams("kayttaja");
+            String keskustelualue = req.queryParams("keskustelualue");
+            String keskustelu = req.queryParams("keskustelu");
+            String viesti = req.queryParams("viesti");
+            System.out.println("Kirjoittaja: " + kayttaja + " Keskustelualue: " + keskustelualue);
+            
+            Kayttaja k = kayttajaDao.findOne(kayttaja);
+            if(k == null) {
+                System.out.println("Luodaan uusi käyttäjä!");
+                k = kayttajaDao.add(new Kayttaja(kayttaja));
+            }
+            //Keskustelu k = keskusteluDao.findOne(1);
+            Keskustelu kesk = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu")));
+            //if(kesk == 0) tsekkaa !
+            
+            System.out.println("Luodaan uusi keskustelu!");
+            //Keskustelu kes = keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params("id")), Integer.parseInt(req.params("aloittaja")), Integer.parseInt(req.params("alue")), req.params("otsikko")));
+            Keskustelu newKesk = keskusteluDao.add(new Keskustelu(Integer.parseInt(req.params("keskustelu")), k.getKayttajaID(), Integer.parseInt(req.params("alue")), req.params("otsikko")));
+            
+            
+            //kesk = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu")));
+            
+            res.redirect("/" + newKesk.getOtsikko() + "/" + Integer.toString (newKesk.getId()));
+            
+            return "";
+        });
 
-        // Here comes the missing DAO-modules calls:
         get("/keskustelualueet", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("keskustelualueet", keskustelualueDao.findAllForList());
@@ -155,6 +184,7 @@ public class Main {
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             return "";
         });
+
         
         post("/:keskustelualue", (req, res) -> {
             String kirjoittaja = req.queryParams("kirjoittaja");
@@ -183,5 +213,6 @@ public class Main {
 //
 //            return new ModelAndView(map, "viestit");
 //        }, new ThymeleafTemplateEngine());
+
     }
 }

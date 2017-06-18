@@ -11,7 +11,7 @@ public class Keskustelu {
     private int viestimaara;
     private Timestamp avausaika;
 
-    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, int viestimaara, Timestamp avausaika) {
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko) {
         this.id = id;
         this.aloittaja = aloittaja;
         this.alue = alue;
