@@ -28,19 +28,18 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public Keskustelu add(Keskustelu k) throws SQLException {
         Connection connection = this.database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (aloittaja, alue, otsikko) VALUES (?, ?, ?)");
-        stmt.setInt(2, k.getAloittaja());
-        stmt.setInt(3, k.getAlue());
-        stmt.setString(4, k.getOtsikko());
+        stmt.setInt(1, k.getAloittaja());
+        stmt.setInt(2, k.getAlue());
+        stmt.setString(3, k.getOtsikko());
         
         stmt.executeUpdate();
         
         System.out.println("LISÄTÄÄN KESKUSTELU");
         
-        int i = getNewid(connection);
-        System.out.print("Tämä on uusi id: ");
-        System.out.println("i");
-        
-        k.setId(i);
+
+        //int i = getNewid(connection); Tarvitaanko tätä?
+        //k.setId(i); 
+
         
         
         stmt.close();
@@ -48,6 +47,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         return k; 
     }
 
+    /* Tarvitaanko tätä
     public int getNewid(Connection conn) throws SQLException {
          PreparedStatement stmt = conn.prepareStatement(
         "SELECT last_insert_rowid()");       
@@ -58,15 +58,15 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         if (!hasOne) {
             return 0;
         }    
-        int id = rs.getInt("id");
+        int id = rs.getInt("id"); // <-- Tossa kyselyssä ei taida olla id:tä?
         return id;
-    } 
+    } */
     
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         //PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?");
-        PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+        PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, COUNT(v.id) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelu k "
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
@@ -87,6 +87,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         Timestamp avausaika = rs.getTimestamp("avausaika");
 
         Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
+        
+        keskustelux.setViestimaara(viestimaara);
+        keskustelux.setAvausaika(avausaika);
+        
 
         rs.close();
         stmt.close();
@@ -114,7 +118,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             Integer viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
 
-        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko));
+        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko,viestimaara,avausaika));
         }
 
         rs.close();
@@ -127,7 +131,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     public List<Keskustelu> findPerAlue(String alue) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(
-        "SELECT k.id AS id, otsikko, aloittaja, k.alue AS alue, COUNT(*) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
+        "SELECT k.id AS id, otsikko, aloittaja, k.alue AS alue, COUNT(v.id) AS viestimaara, MIN(v.lahetysaika) AS avausaika, "
                 + "MAX(v.lahetysaika) AS viimeisin "
                 + "FROM Keskustelualue a "
                 + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
@@ -149,7 +153,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             int viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
 
-            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko));
+            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko,viestimaara,avausaika));
         }
 
         rs.close();
