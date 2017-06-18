@@ -28,6 +28,15 @@ public class Keskustelu {
         this.viestimaara = 0;
         this.avausaika = null;
     }    
+
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, Integer viestimaara, Timestamp avausaika) {
+        this.id = id;
+        this.aloittaja = aloittaja;
+        this.alue = alue;
+        this.otsikko = otsikko;
+        this.viestimaara = viestimaara;
+        this.avausaika = avausaika;
+    }
     
     public Integer getId() {
         return id;
