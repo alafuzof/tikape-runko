@@ -16,9 +16,8 @@ import tikape.runko.database.ViestiDao;
 import tikape.runko.domain.Kayttaja;
 import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Keskustelualue;
-import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Viesti;
-//import tikape.runko.domain.KeskustelualueListausItem;
+import tikape.runko.domain.KeskustelualueListausItem;
 
 
 public class Main {
@@ -97,7 +96,7 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
-        post("/:keskustelualue/:id", (req, res) -> {
+        post("/:keskustelualue/",  (req, res) -> {
 
             String kayttaja = req.queryParams("kayttaja");
             //String keskustelualue = req.queryParams("keskustelualue");
@@ -126,7 +125,7 @@ public class Main {
             
             int keskustelualueid = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelualue"))).getId();
             
-            keskusteluDao.add(new Keskustelu(k.getKayttajaID(), keskustelualueid, keskustelu));
+            keskusteluDao.add(new Keskustelu(k.getKayttajaID(), kirjoittaja, keskustelualueid, keskustelu));
             
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             
@@ -177,7 +176,6 @@ public class Main {
         
         post("/:alue/:keskustelu", (req, res) -> {
             String kirjoittaja = req.queryParams("kirjoittaja");
-            int alue = Integer.parseInt(req.queryParams("alue"));
             String keskustelu = req.queryParams("keskustelu");
             System.out.println("Kirjoittaja: " + kirjoittaja + " Keskustelu: " + keskustelu);
             
@@ -187,7 +185,7 @@ public class Main {
                 kayttajaDao.add(new Kayttaja(kirjoittaja));
             }
             
-            keskusteluDao.add(new Keskustelu(5, 3, alue, keskustelu));
+            keskusteluDao.add(new Keskustelu(5, keskustelualue.getId(), alue, keskustelu));
             
             res.redirect("/" + req.params("keskustelu") + "/5");
             return "";
@@ -214,13 +212,6 @@ public class Main {
             return "";
         });        
 */
-        
-//        get("/viestit", (req, res) -> {
-//            HashMap map = new HashMap<>();
-//            map.put("viestit", viestiDao.findAll());
-//
-//            return new ModelAndView(map, "viestit");
-//        }, new ThymeleafTemplateEngine());
 
     }
 }
