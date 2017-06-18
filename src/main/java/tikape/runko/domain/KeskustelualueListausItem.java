@@ -5,6 +5,7 @@
  */
 package tikape.runko.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -16,9 +17,9 @@ public class KeskustelualueListausItem implements Comparable<KeskustelualueLista
     private int rowindex;
     private Keskustelualue kalue;
     private int maara;
-    private String viimeisin;
+    private Timestamp viimeisin;
     
-    public KeskustelualueListausItem(int rowindex, Keskustelualue kalue, int maara, String viimeisin) {
+    public KeskustelualueListausItem(int rowindex, Keskustelualue kalue, int maara, Timestamp viimeisin) {
         this.rowindex = rowindex;
         this.kalue = kalue;
         this.maara = maara;
@@ -40,7 +41,7 @@ public class KeskustelualueListausItem implements Comparable<KeskustelualueLista
         return this.kalue.getId();
     }
     
-    public String getViimeisin() {
+    public Timestamp getViimeisin() {
         
         return this.viimeisin;
     }

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +121,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
             String nimi = rs.getString("nimi");
             Keskustelualue kalue = new Keskustelualue(id, nimi);
             Integer maara = rs.getInt("maara");
-            String viimeisin = rs.getString("viimeisin");            
+            Timestamp viimeisin = rs.getTimestamp("viimeisin");            
 
             keskustelualuelistaus.add(new KeskustelualueListausItem(rowindex, kalue ,maara, viimeisin));
             i++;

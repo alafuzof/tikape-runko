@@ -2,27 +2,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>A@HOT-Keskustelufoorumi</title>
         <meta charset="utf-8" />
-
-        <style>
-        body {background-color: powderblue;}
-        h1   {color: blue;}
-        h3   {color: brown;}
-        </style>
-    
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>A@HOT-Keskustelufoorumi</title>
         
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        <h1>Tervetuloa keskustelemaan AHOT-foorumillamme!</h1>
-        <h3>Keskustelualueet</h3> 
-        <ul>
-            <li th:each="keskustelualue: ${keskustelualueet}">
-               
-                <a th:text="${keskustelualue.nimi}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a>
-                <p>Viestien määrä: <span th:text="${keskustelualue.maara}">XX</span><span>.  Viimeisin viesti:  </span><span th:text="${keskustelualue.viimeisin}">YY</span></p>
-            </li>
-        </ul>
+        <div class="container">
+            <div class="page-header">
+                <h1>Tervetuloa keskustelemaan AHOT-foorumillamme!</h1>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <h3>Keskustelualueet</h3> 
+                    <table class="table">
+                        <tr>
+                            <th>Keskustelualue</th>
+                            <th>Viestejä</th>
+                            <th>Viimeisin</th>
+                        </tr>
+                        <tr th:each="keskustelualue: ${keskustelualueet}">
+                            <td><a th:text="${keskustelualue.nimi}" th:href="@{~/{nimi}/(nimi=${keskustelualue.nimi})}">Alue</a></td>        
+                            <td th:text="${keskustelualue.maara}">XX</td>
+                            <td th:text="${#dates.format(keskustelualue.viimeisin, 'yyyy-MM-dd hh:mm:ss')}">YY</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
