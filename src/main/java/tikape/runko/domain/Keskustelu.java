@@ -20,6 +20,15 @@ public class Keskustelu {
         this.avausaika = avausaika;
     }
 
+    public Keskustelu(Integer aloittaja, Integer alue, String otsikko) {
+        this.id = null;
+        this.aloittaja = aloittaja;
+        this.alue = alue;
+        this.otsikko = otsikko;
+        this.viestimaara = 0;
+        this.avausaika = null;
+    }    
+    
     public Integer getId() {
         return id;
     }

@@ -38,10 +38,11 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
         return null;
     }
     
+
     @Override
     public  Keskustelualue findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM  Keskustelualue WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelualue WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -56,7 +57,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
 
         Keskustelualue o = new Keskustelualue(id, nimi);
 
-         Keskustelualue keskustelualuex = new  Keskustelualue(id,nimi);
+         //Keskustelualue keskustelualuex = new  Keskustelualue(id,nimi);
 
 
             rs.close();
@@ -64,7 +65,7 @@ public class KeskustelualueDao implements Dao<Keskustelualue, Integer>{
             connection.close();
         return o;
     }
-
+    
 
     @Override
     public List< Keskustelualue> findAll() throws SQLException {
