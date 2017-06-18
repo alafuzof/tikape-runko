@@ -21,8 +21,19 @@ import tikape.runko.domain.Viesti;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        Database database = new Database("jdbc:sqlite:testi.db");
+        // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
+        // käytetään oletuksena paikallista sqlite-tietokantaa
+        String jdbcOsoite = "jdbc:sqlite:testi.db";
+        // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        } 
+        Database database = new Database(jdbcOsoite);
+        //Database database = new Database("jdbc:sqlite:testi.db");
         database.init();
 
         KeskusteluDao keskusteluDao = new KeskusteluDao(database);
@@ -146,7 +157,7 @@ public class Main {
                 System.out.println("Luodaan uusi käyttäjä!");
                 k = kayttajaDao.add(new Kayttaja(kirjoittaja));
             }
-            
+                
             int keskustelu = keskusteluDao.findOne(Integer.parseInt(req.params("keskustelu"))).getId();
             
             viestiDao.add(new Viesti(k.getKayttajaID(), k.getTunnus(), keskustelu, viesti));
