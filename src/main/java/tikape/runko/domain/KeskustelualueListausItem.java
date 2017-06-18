@@ -35,6 +35,11 @@ public class KeskustelualueListausItem implements Comparable<KeskustelualueLista
         return this.maara;
     }    
     
+    public int getKeskusteluAlueid() {
+        
+        return this.kalue.getId();
+    }
+    
     public String getViimeisin() {
         
         return this.viimeisin;
