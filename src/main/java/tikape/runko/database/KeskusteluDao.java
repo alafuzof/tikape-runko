@@ -86,12 +86,13 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         String otsikko = rs.getString("otsikko");
         Integer viestimaara = rs.getInt("viestimaara");
         Timestamp avausaika = rs.getTimestamp("avausaika");
+        Timestamp viimeisin = rs.getTimestamp("viimeisin");
 
         Keskustelu keskustelux = new Keskustelu(id,aloittaja,alue,otsikko);
         
         keskustelux.setViestimaara(viestimaara);
         keskustelux.setAvausaika(avausaika);
-        
+        keskustelux.setViimeisin(viimeisin);
 
         rs.close();
         stmt.close();
@@ -118,8 +119,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
             Integer viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
+            Timestamp viimeisin = rs.getTimestamp("viimeisin");
 
-        keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko,viestimaara,avausaika));
+            keskustelut.add(new Keskustelu(id,aloittaja,alue,otsikko,viestimaara,avausaika,viimeisin));
         }
 
         rs.close();
@@ -139,7 +141,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                 + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
                 + "WHERE a.nimi = ? "
                 + "GROUP BY k.id, otsikko, aloittaja, k.alue "
-                + "ORDER BY avausaika DESC LIMIT 10;"
+                + "ORDER BY viimeisin DESC LIMIT 10;"
                 );
         stmt.setString(1, alue);
 
@@ -153,8 +155,9 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             String otsikko = rs.getString("otsikko");
             int viestimaara = rs.getInt("viestimaara");
             Timestamp avausaika = rs.getTimestamp("avausaika");
+            Timestamp viimeisin = rs.getTimestamp("viimeisin");
 
-            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko,viestimaara,avausaika));
+            keskustelut.add(new Keskustelu(id,aloittaja,alueID,otsikko,viestimaara,avausaika,viimeisin));
         }
 
         rs.close();

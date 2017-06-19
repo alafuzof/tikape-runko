@@ -2,31 +2,67 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Keskustelualue</title>
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title th:text="${alue}">Alue</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
     </head>
 
-    <body>     
-        <h1><span th:text="${alue}"></span></h1>
-        <p>Olet nyt keskustelualueella: <span th:text="${alue}"></span></p>
-        <p>Takaisin <a href="../index">aluelistaukseen</a></p>
-        
-        <ol>
-            <li th:each="keskustelu: ${keskustelut}">
-                <a href="error.html" th:text="${keskustelu.otsikko}" th:href="@{~/{nimi}/{id}(nimi=${alue},id=${keskustelu.id})}">Keskustelu</a>
-                <p>Keskustelualueen viestien lukumäärä: <span th:text="${keskustelu.viestimaara}">XX</span></p>
-            </li>
-        </ol>
-        
-        <h3>Voit aloittaa uuden keskustelun tästä: </h3>
-        <form method="POST" action="">
-            Nimimerkki:<br/>
-            <input type="text" name="kirjoittaja"/><br/>
-            Keskustelun otsikko:<br/>
-            <input type="text" name="otsikko"/><br/> 
-            <input type="submit" value="Lähetä!"/> 
-        </form>
-
-        <p>Takaisin <a href="../index">aluelistaukseen</a></p>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1 th:text="'Alue: ' + ${alue}">Alue</h1>
+                <p>Takaisin <a href="" th:href="@{~/index}">aluelistaukseen</a></p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    <h3>Keskustelut</h3> 
+                    <table class="table">
+                        <tr>
+                            <th>Otsikko</th>
+                            <th>Viestejä</th>
+                            <th>Viimeisin</th>
+                        </tr>
+                        <tr th:each="keskustelu: ${keskustelut}">
+                            <td><a th:text="${keskustelu.otsikko}" th:href="@{~/{alue}/{id}(alue=${alue},id=${keskustelu.id})}">Otsikko</a></td>        
+                            <td th:text="${keskustelu.viestimaara}">XX</td>
+                            <td th:text="${keskustelu.viimeisin != null} ? ${#dates.format(keskustelu.viimeisin, 'yyyy-MM-dd hh:mm:ss')} : '-'">YY</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 bg-info">
+                    <h3>Aloita uusi keskustelu:</h3>
+                    <form method="POST" action="">
+                        <div class="form-group">
+                            <label for="kirjoittaja">Nimimerkki:</label>
+                            <input type="text" name="kirjoittaja" id="kirjoittaja" class="form-control" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="otsikko">Otsikko:</label>
+                            <input type="text" name="otsikko" id="otsikko" class="form-control" required="required" />
+                        </div>
+                        <button type="submit" class="btn btn-default">Lähetä!</button>
+                        <p></p>
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
     </body>
 </html>

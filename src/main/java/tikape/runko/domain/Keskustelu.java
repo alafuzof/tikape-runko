@@ -1,6 +1,7 @@
 package tikape.runko.domain;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Keskustelu {
 
@@ -10,14 +11,17 @@ public class Keskustelu {
     private String otsikko;
     private int viestimaara;
     private Timestamp avausaika;
+    private Timestamp viimeisin;
 
     public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko) {
         this.id = id;
         this.aloittaja = aloittaja;
         this.alue = alue;
         this.otsikko = otsikko;
-        this.viestimaara = viestimaara;
-        this.avausaika = avausaika;
+        this.viestimaara = 0;
+        Date date = new Date();
+        this.avausaika = new Timestamp(date.getTime());
+        this.viimeisin = null;
     }
 
     public Keskustelu(Integer aloittaja, Integer alue, String otsikko) {
@@ -26,16 +30,19 @@ public class Keskustelu {
         this.alue = alue;
         this.otsikko = otsikko;
         this.viestimaara = 0;
-        this.avausaika = null;
+        Date date = new Date();
+        this.avausaika = new Timestamp(date.getTime());
+        this.viimeisin = null;
     }    
 
-    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, Integer viestimaara, Timestamp avausaika) {
+    public Keskustelu(Integer id, Integer aloittaja, Integer alue, String otsikko, Integer viestimaara, Timestamp avausaika, Timestamp viimeisin) {
         this.id = id;
         this.aloittaja = aloittaja;
         this.alue = alue;
         this.otsikko = otsikko;
         this.viestimaara = viestimaara;
         this.avausaika = avausaika;
+        this.viimeisin = viimeisin;
     }
     
     public Integer getId() {
@@ -83,4 +90,14 @@ public class Keskustelu {
     public void setViestimaara(Integer viestimaara) {
         this.viestimaara = viestimaara;
     }
+
+    public Timestamp getViimeisin() {
+        return viimeisin;
+    }
+
+    public void setViimeisin(Timestamp viimeisin) {
+        this.viimeisin = viimeisin;
+    }
+    
+    
 }
