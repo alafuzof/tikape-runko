@@ -76,7 +76,7 @@ public class Main {
         }*/
                 
 
-        get("/index", (req, res) -> {
+        get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             
             map.put("keskustelualueet", keskustelualueDao.findAllForList());
@@ -86,7 +86,7 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
-        get("/testi.html", (req, res) -> {
+        /*get("/testi.html", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("viesti", "Tervetuloa AHOT-foorumille !");
 
@@ -107,8 +107,6 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
-
-        /*
         post("/keskustelualue", (req, res) -> {
 
             String kayttaja = req.queryParams("kayttaja");
@@ -181,7 +179,6 @@ public class Main {
             map.put("viestit", viestiDao.findAllByKeskustelu(Integer.parseInt(req.params("keskustelu"))));
             //map.put("keskustelut", keskusteluDao.findPerAlue(req.params("alue")));
             
-       
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
@@ -206,8 +203,6 @@ public class Main {
             res.redirect("/" + req.params("alue") + "/" + req.params("keskustelu"));
             return "";
         });
-
-
 
         // Tämä POST luo uuden keskustelun jollekin keskustelualueelle
         post("/:alue/",  (req, res) -> {
