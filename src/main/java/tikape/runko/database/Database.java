@@ -114,7 +114,7 @@ public class Database {
         + "FROM Keskustelualue a "
         + "LEFT JOIN Keskustelu k ON (a.id = k.alue) "
         + "LEFT JOIN Viesti v ON (k.id = v.keskustelu) "
-        + "GROUP by a.id, a.nimi;");
+        + "GROUP BY a.id, a.nimi;");
 
         lista.add("CREATE VIEW KeskusteluList AS "
         + "SELECT k.id AS id, k.otsikko, k.aloittaja, k.alue AS alue, "
